@@ -1,13 +1,19 @@
-name: Run Grid Updater Every 3 Hours
+name: Run Grid Updater Every 5 Minutes
 
 on:
   schedule:
-    - cron: "0 */3 * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
+permissions:
+  contents: write
 
 jobs:
   run-grid-updater:
+    concurrency:
+      group: grid-updater
+      cancel-in-progress: true
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,3 +25,38 @@ jobs:
         run: bun install
       - name: Run grid updater
         run: bun run grid-updater.ts
+      - name: Commit and push changes
+        run: |
+          set -e
+          git config user.name "Abner Soares Alves Junior"
+          git config user.email "abnersajr@gmail.com"
+
+          if git status --porcelain | grep . >/dev/null; then
+            patch=""
+            date=""
+            if [ -f last_update.txt ]; then
+              patch=$(sed -n '1p' last_update.txt | tr -d '\r')
+              date=$(sed -n '2p' last_update.txt | tr -d '\r')
+            fi
+            if [ -z "$patch" ] || [ -z "$date" ]; then
+              if [ -f grids.md ]; then
+                first_row=$(awk 'found && NF{print; exit} /^\|[[:space:]-|]+$/{found=1}' grids.md)
+                if [ -n "$first_row" ]; then
+                  date=$(printf "%s" "$first_row" | awk -F"|" '{gsub(/^ +| +$/,"",$2); print $2}')
+                  patch=$(printf "%s" "$first_row" | awk -F"|" '{gsub(/^ +| +$/,"",$3); print $3}')
+                fi
+              fi
+            fi
+
+            msg="update: day ${date:-unknown_date} patch ${patch:-unknown_patch}"
+            echo "Committing with message: $msg"
+            git add -A
+            if git diff --staged --quiet; then
+              echo "No changes to commit after staging."
+              exit 0
+            fi
+            git commit -m "$msg"
+            git push
+          else
+            echo "No changes detected."
+          fi

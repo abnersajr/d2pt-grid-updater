@@ -1,7 +1,5 @@
 # Dota 2 Pro Tracker - Grid Updater
 
-**Last update**: 2025-10-12 • Patch 7.39d — see [grids.md](./grids.md)
-
 ## What is this?
 
 Automates downloading the three Meta Hero Grid configuration JSONs from Dota2ProTracker and keeps this repo up to date by:
