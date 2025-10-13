@@ -1,5 +1,7 @@
 import { chromium } from "playwright";
 
+const GRIDS_STORE_FOLDER = "./grids";
+
 async function main() {
   const browser = await chromium.launch({ headless: false });
   const page = await browser.newPage();
@@ -83,7 +85,7 @@ async function main() {
     const suggestedFilename = download
       .suggestedFilename()
       .replace(/\.json$/, "");
-    const savePath = `${suggestedFilename}_${dateStr}_${patchStr}.json`;
+    const savePath = `${GRIDS_STORE_FOLDER}/${suggestedFilename}_${dateStr}_${patchStr}.json`;
     await download.saveAs(savePath);
     console.log(`Downloaded file saved as ${savePath}`);
   }
