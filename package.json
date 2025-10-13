@@ -4,15 +4,16 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "postinstall": "bunx playwright install-deps && bunx playwright install chromium"
+    "postinstall": "bunx playwright install-deps && bunx playwright install chromium",
+    "start": "bun run grid-updater.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "1.3.0"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "5.9.3"
   },
   "dependencies": {
-    "playwright": "^1.56.0"
+    "playwright": "1.56.0"
   }
 }
