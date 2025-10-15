@@ -124,11 +124,65 @@ async function main() {
       mdRow?.patch || (rawPatch !== "unknown_patch_raw" ? rawPatch : undefined);
     const dateForRepair =
       mdRow?.date || (dateStr !== "unknown_date" ? dateStr : undefined);
+    // If grids.md has no usable row, attempt a reconstruction: download current grids and build initial table.
+    const needsRebuild = !mdRow;
+    if (needsRebuild && patchForRepair && dateForRepair) {
+      try {
+        console.log(
+          "Repair: grids.md has no valid rows; attempting reconstruction via fresh downloads."
+        );
+        // Attempt to locate download buttons (parentDiv already resolved earlier in script)
+        const downloadButtons = await parentDiv.locator(
+          'button:has-text("Download")'
+        );
+        const buttonCount = await downloadButtons.count();
+        if (buttonCount < 3) {
+          console.error(
+            `Repair: expected 3 download buttons, found ${buttonCount}. Aborting reconstruction.`
+          );
+        } else {
+          await fs.mkdir(GRIDS_STORE_FOLDER, { recursive: true });
+          const savedFiles: string[] = [];
+          // Reuse patchStr/dateStr already computed for file naming (ensure they are not unknown)
+          const effectiveDate =
+            dateStr !== "unknown_date" ? dateStr : dateForRepair;
+          const effectivePatchStr =
+            patchStr !== "punknown_patch_raw"
+              ? patchStr
+              : "p" + (patchForRepair || "unknown").replace(/\./g, "_");
+          for (let i = 0; i < 3; i++) {
+            const [download] = await Promise.all([
+              page.waitForEvent("download"),
+              downloadButtons.nth(i).click(),
+            ]);
+            const suggestedFilename = download
+              .suggestedFilename()
+              .replace(/\.json$/, "");
+            const savePath = `${GRIDS_STORE_FOLDER}/${suggestedFilename}_${effectiveDate}_${effectivePatchStr}.json`;
+            await download.saveAs(savePath);
+            savedFiles.push(path.basename(savePath));
+            console.log(`Repair: downloaded ${path.basename(savePath)}`);
+          }
+          const linkFile = (fname?: string) =>
+            fname ? `[🔗 Download](grids/${fname})` : "";
+          const newRow = `| ${effectiveDate} | ${patchForRepair} | ${linkFile(
+            savedFiles[0]
+          )} | ${linkFile(savedFiles[1])} | ${linkFile(savedFiles[2])} |`;
+          const table = `| Date | Patch | D2PT Rating | High Winrate | Most Played |\n| ---- | ----- | ----------- | ------------ | ----------- |\n${newRow}\n`;
+          await fs.writeFile(GRIDS_MD, table, "utf8");
+          console.log("Repair: rebuilt grids.md with new table and first row.");
+        }
+      } catch (err) {
+        console.error("Repair: failed during reconstruction:", err);
+      }
+    }
     if (patchForRepair && dateForRepair) {
       await writeLastUpdateFile(patchForRepair, dateForRepair);
       await updateReadmeLastUpdate(patchForRepair, dateForRepair);
       console.log(
-        `Repaired metadata using ${
+        `Repaired ${
+          needsRebuild ? "and rebuilt grids.md " : "metadata "
+        }using ${
           mdRow ? "grids.md" : "site scrape"
         }: ${dateForRepair} • Patch ${patchForRepair}`
       );
@@ -357,7 +411,7 @@ async function main() {
 
   // Update grids.md: insert new row only if it's missing; do not edit header
   const linkFile = (fname?: string) =>
-    fname ? `[${fname}](grids/${fname})` : "";
+    fname ? `[🔗 Download](grids/${fname})` : "";
   const newRow = `| ${dateStr} | ${rawPatch} | ${linkFile(
     savedFiles[0]
   )} | ${linkFile(savedFiles[1])} | ${linkFile(savedFiles[2])} |`;
