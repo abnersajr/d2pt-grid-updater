@@ -26,6 +26,15 @@ interface Grid {
   download_url: string;
 }
 
+interface GroupedGrid {
+  key: string;
+  date: string;
+  patch: string;
+  d2pt?: Grid;
+  highWinrate?: Grid;
+  mostPlayed?: Grid;
+}
+
 const notifyBackendBroken = () => {
   notification.error({
     message: "Feature Not Available",
@@ -37,27 +46,61 @@ const notifyBackendBroken = () => {
 
 const columns = [
   {
-    title: "Grid Name",
-    dataIndex: "name",
-    key: "name",
-  },
-  {
     title: "Date",
     dataIndex: "date",
     key: "date",
     width: 120,
   },
   {
-    title: "Action",
-    key: "action",
-    width: 120,
-    render: () => <Button onClick={notifyBackendBroken}>Apply</Button>,
+    title: "Patch",
+    dataIndex: "patch",
+    key: "patch",
+    width: 100,
+  },
+  {
+    title: "D2PT Rating",
+    dataIndex: "d2pt",
+    key: "d2pt",
+    render: (grid?: Grid) =>
+      grid ? (
+        <Button onClick={notifyBackendBroken} size="small">
+          Apply
+        </Button>
+      ) : (
+        "N/A"
+      ),
+  },
+  {
+    title: "High Winrate",
+    dataIndex: "highWinrate",
+    key: "highWinrate",
+    render: (grid?: Grid) =>
+      grid ? (
+        <Button onClick={notifyBackendBroken} size="small">
+          Apply
+        </Button>
+      ) : (
+        "N/A"
+      ),
+  },
+  {
+    title: "Most Played",
+    dataIndex: "mostPlayed",
+    key: "mostPlayed",
+    render: (grid?: Grid) =>
+      grid ? (
+        <Button onClick={notifyBackendBroken} size="small">
+          Apply
+        </Button>
+      ) : (
+        "N/A"
+      ),
   },
 ];
 
 function App() {
   const [dotaPath, setDotaPath] = useState("Searching for Dota 2 path...");
-  const [grids, setGrids] = useState<Grid[]>([]);
+  const [grids, setGrids] = useState<GroupedGrid[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -70,12 +113,35 @@ function App() {
       setLoading(true);
       setError(null);
       try {
-        // --- Call working backend functions ---
         const path: string | null = await invoke("find_dota_config_path");
         setDotaPath(path ?? "Dota 2 configuration path not found.");
 
         const remoteGrids: Grid[] = await invoke("list_remote_grids");
-        setGrids(remoteGrids.map((g) => ({ ...g, key: g.name })));
+        const grouped = remoteGrids.reduce((acc, grid) => {
+          const { date, name } = grid;
+          const patch =
+            name.split("_").find((s) => s.startsWith("p"))?.replace("p", "") ||
+            "N/A";
+          if (!acc[date]) {
+            acc[date] = {
+              key: date,
+              date,
+              patch,
+            };
+          }
+          if (name.includes("d2pt_rating")) {
+            acc[date].d2pt = grid;
+          } else if (name.includes("high_winrate")) {
+            acc[date].highWinrate = grid;
+          } else if (name.includes("most_played")) {
+            acc[date].mostPlayed = grid;
+          }
+          return acc;
+        }, {} as { [date: string]: GroupedGrid });
+
+        setGrids(
+          Object.values(grouped).sort((a, b) => b.date.localeCompare(a.date))
+        );
       } catch (e: any) {
         setError(e.toString());
         notification.error({
@@ -101,8 +167,15 @@ function App() {
         </Header>
         <Content style={{ padding: "24px" }}>
           <Space direction="vertical" size="large" style={{ width: "100%" }}>
-            {error && <Alert message="An error occurred" description={error} type="error" showIcon />}
-            
+            {error && (
+              <Alert
+                message="An error occurred"
+                description={error}
+                type="error"
+                showIcon
+              />
+            )}
+
             <Card title="Status">
               <Text strong>Dota 2 Config Path: </Text>
               <Text code>{dotaPath}</Text>
@@ -113,7 +186,7 @@ function App() {
                 columns={columns}
                 dataSource={grids}
                 loading={loading}
-                pagination={{ pageSize: 5 }}
+                pagination={{ pageSize: 10 }}
                 size="small"
               />
             </Card>
