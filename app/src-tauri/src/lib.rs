@@ -1,6 +1,4 @@
-use tauri::Manager;
 use serde::{Deserialize, Serialize};
-use tauri::AppHandle;
 use std::path::PathBuf;
 use std::fs;
 use std::time::SystemTime;
