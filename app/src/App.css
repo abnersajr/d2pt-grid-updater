@@ -1,5 +1,21 @@
 .layout {
-  min-height: 100vh;
+  height: 100vh;
+  background-color: #141414;
+  /* Ant Design dark background */
+}
+
+/* Ensure dark background fills the entire viewport */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #000000;
+}
+
+#root {
+  height: 100%;
+  background-color: #000000;
 }
 
 /* Responsive font sizing for better DPI handling */

@@ -30,9 +30,6 @@ To set up a development environment, you will need to install [Node.js/pnpm](htt
   - **MinGW-w64**: `sudo apt-get install gcc-mingw-w64 g++-mingw-w64`
   - **Additional libraries**: `sudo apt-get install libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf`
 - This setup allows running the application on WSL while displaying through Windows mechanisms instead of X11.
-- **Note**: The compiled Windows binary cannot run directly in WSL. For development, you have two options:
-  - Install Wine: `sudo apt-get install wine` (allows running Windows .exe in WSL)
-  - Or use the compiled binary with Windows directly (copy `target/x86_64-pc-windows-gnu/debug/app.exe` to Windows and run it there)
 
 1.  **Clone the repository:**
     ```bash

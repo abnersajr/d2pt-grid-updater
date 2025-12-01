@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   ConfigProvider,
+  Flex,
   Layout,
   Space,
   Switch,
@@ -125,11 +126,54 @@ function App() {
     setZoomLevel(prev => Math.max(prev - 1, 1));
   };
 
+  // Function to detect and update DPI information
+  const updateDpiInfo = async () => {
+    const dpi = window.devicePixelRatio;
+    const effectiveScreenWidth = window.screen.width;
+    const effectiveScreenHeight = window.screen.height;
+
+    // Calculate physical screen resolution (effective resolution * device pixel ratio)
+    const physicalScreenWidth = Math.round(effectiveScreenWidth * dpi);
+    const physicalScreenHeight = Math.round(effectiveScreenHeight * dpi);
+
+    // Get system DPI scale estimate from Tauri backend
+    const systemDpiScale = await invoke("estimate_system_dpi_scale", {
+      screenWidth: effectiveScreenWidth,
+      screenHeight: effectiveScreenHeight,
+      devicePixelRatio: dpi,
+    }) as number;
+
+    const screenInfo = {
+      devicePixelRatio: dpi,
+      screenWidth: effectiveScreenWidth,
+      screenHeight: effectiveScreenHeight,
+      physicalScreenWidth,
+      physicalScreenHeight,
+      windowInnerWidth: window.innerWidth,
+      windowInnerHeight: window.innerHeight,
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      systemDpiScale,
+    };
+
+    console.log('DPI Debug Info Updated:', screenInfo);
+    setDpiInfo(screenInfo);
+
+    // Apply DPI-based scaling adjustments
+    if (dpi >= 1.5) {
+      document.documentElement.style.fontSize = '18px';
+    } else if (dpi >= 2.0) {
+      document.documentElement.style.fontSize = '20px';
+    }
+  };
+
   // DPI Debug Information
   const [dpiInfo, setDpiInfo] = useState({
     devicePixelRatio: 1,
     screenWidth: 0,
     screenHeight: 0,
+    physicalScreenWidth: 0,
+    physicalScreenHeight: 0,
     windowInnerWidth: 0,
     windowInnerHeight: 0,
     userAgent: '',
@@ -142,37 +186,8 @@ function App() {
       setLoading(true);
       setError(null);
       try {
-        // DPI Detection and Logging
-        const dpi = window.devicePixelRatio;
-        const screenInfo = {
-          devicePixelRatio: dpi,
-          screenWidth: window.screen.width,
-          screenHeight: window.screen.height,
-          windowInnerWidth: window.innerWidth,
-          windowInnerHeight: window.innerHeight,
-          userAgent: navigator.userAgent,
-          platform: navigator.platform,
-          systemDpiScale: 1, // Will be updated from Tauri command
-        };
-
-        console.log('DPI Debug Info:', screenInfo);
-
-        // Try to get system DPI from Tauri (will fail gracefully if command doesn't exist yet)
-        try {
-          const systemDpi = await invoke("get_system_dpi_scale") as number;
-          screenInfo.systemDpiScale = systemDpi;
-        } catch (e) {
-          console.log('System DPI command not available yet:', e);
-        }
-
-        setDpiInfo(screenInfo);
-
-        // Apply DPI-based scaling adjustments
-        if (dpi >= 1.5) {
-          document.documentElement.style.fontSize = '18px';
-        } else if (dpi >= 2.0) {
-          document.documentElement.style.fontSize = '20px';
-        }
+        // Initialize DPI information
+        await updateDpiInfo();
 
         const path: string | null = await invoke("find_dota_config_path");
         setDotaPath(path ?? "Dota 2 configuration path not found.");
@@ -215,6 +230,63 @@ function App() {
     };
 
     initialize();
+
+    // Set up event listeners for monitor changes
+    let lastScreenInfo = {
+      width: window.screen.width,
+      height: window.screen.height,
+      devicePixelRatio: window.devicePixelRatio,
+    };
+
+    const handleResize = () => {
+      // Check if screen properties have changed (indicating monitor switch)
+      const currentScreenInfo = {
+        width: window.screen.width,
+        height: window.screen.height,
+        devicePixelRatio: window.devicePixelRatio,
+      };
+
+      const screenChanged =
+        currentScreenInfo.width !== lastScreenInfo.width ||
+        currentScreenInfo.height !== lastScreenInfo.height ||
+        currentScreenInfo.devicePixelRatio !== lastScreenInfo.devicePixelRatio;
+
+      if (screenChanged) {
+        console.log('Monitor change detected, updating DPI info');
+        lastScreenInfo = currentScreenInfo;
+      }
+
+      // Always update DPI info on resize to capture window size changes
+      updateDpiInfo();
+    };
+
+    // Listen for resize events (may trigger when moving between monitors)
+    window.addEventListener('resize', handleResize);
+
+    // Also poll every 2 seconds as a fallback for monitor changes
+    const pollInterval = setInterval(() => {
+      const currentScreenInfo = {
+        width: window.screen.width,
+        height: window.screen.height,
+        devicePixelRatio: window.devicePixelRatio,
+      };
+
+      if (
+        currentScreenInfo.width !== lastScreenInfo.width ||
+        currentScreenInfo.height !== lastScreenInfo.height ||
+        currentScreenInfo.devicePixelRatio !== lastScreenInfo.devicePixelRatio
+      ) {
+        console.log('Monitor change detected via polling, updating DPI info');
+        lastScreenInfo = currentScreenInfo;
+        updateDpiInfo();
+      }
+    }, 2000);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearInterval(pollInterval);
+    };
   }, []);
 
   return (
@@ -228,20 +300,19 @@ function App() {
     >
       <Layout
         className={`layout ${wslOverride ? 'wsl-override' : ''}`}
-        style={{
-          transform: `scale(${getZoomScale(zoomLevel)})`,
-          transformOrigin: 'top left',
-          width: `${100 / getZoomScale(zoomLevel)}%`,
-          height: `${100 / getZoomScale(zoomLevel)}%`,
-        }}
       >
         <Header style={{ display: "flex", alignItems: "center" }}>
           <Title level={3} style={{ color: "white", margin: 0 }}>
             D2PT Grid Updater
           </Title>
         </Header>
-        <Content style={{ padding: "24px" }}>
-          <Space direction="vertical" size="large" style={{ width: "100%" }}>
+        <Content
+          style={{
+            padding: "24px",
+            fontSize: `${getZoomScale(zoomLevel) * 100}%`,
+          }}
+        >
+          <Flex vertical gap="large" style={{ width: "100%" }}>
             {error && (
               <Alert
                 message="An error occurred"
@@ -263,7 +334,8 @@ function App() {
                       <Text strong>DPI Debug Info: </Text>
                       <Text code>
                         DPR: {dpiInfo.devicePixelRatio} |
-                        Screen: {dpiInfo.screenWidth}x{dpiInfo.screenHeight} |
+                        Physical Screen: {dpiInfo.physicalScreenWidth}x{dpiInfo.physicalScreenHeight} |
+                        Effective Screen: {dpiInfo.screenWidth}x{dpiInfo.screenHeight} |
                         Window: {dpiInfo.windowInnerWidth}x{dpiInfo.windowInnerHeight} |
                         System Scale: {dpiInfo.systemDpiScale}x
                       </Text>
@@ -371,7 +443,7 @@ function App() {
                 </Button>
               </Space>
             </Card>
-          </Space>
+          </Flex>
         </Content>
         <Footer style={{ textAlign: "center" }}>
           D2PT Grid Updater ©2025 Created with Tauri
