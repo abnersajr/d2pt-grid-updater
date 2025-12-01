@@ -1,8 +1,16 @@
+use md5;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
+use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering as AtomicOrdering};
 use std::time::SystemTime;
+use tauri::{
+    menu::{Menu, MenuEvent, MenuItem},
+    tray::{TrayIconBuilder, TrayIconEvent},
+    Manager, State,
+};
 
 #[cfg(target_os = "windows")]
 use winreg::{
@@ -24,6 +32,20 @@ pub struct Grid {
     pub name: String,
     pub date: String,
     pub download_url: String,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct DetectedGrid {
+    pub grid_type: String, // "d2pt", "high_winrate", "most_played", or "custom"
+    pub name: String,
+    pub date: String,
+    pub hash: String,
+    pub is_known: bool,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct GridHashes {
+    pub hashes: HashMap<String, String>, // filename -> hash
 }
 
 #[tauri::command]
@@ -161,6 +183,113 @@ async fn list_remote_grids() -> Result<Vec<Grid>, String> {
     Ok(grids)
 }
 
+#[tauri::command]
+async fn download_grid_hashes() -> Result<GridHashes, String> {
+    let client = reqwest::Client::new();
+    let url = "https://raw.githubusercontent.com/abnersajr/d2pt-grid-updater/main/grid_hashes.txt";
+
+    let response = client
+        .get(url)
+        .header("User-Agent", "d2pt-grid-updater-app")
+        .send()
+        .await
+        .map_err(|e| format!("Failed to download grid hashes: {}", e))?;
+
+    if !response.status().is_success() {
+        return Err(format!(
+            "Failed to download grid hashes: {}",
+            response.status()
+        ));
+    }
+
+    let content = response.text().await.map_err(|e| e.to_string())?;
+    let mut hashes = HashMap::new();
+
+    for line in content.lines() {
+        let line = line.trim();
+        if line.is_empty() {
+            continue;
+        }
+        if let Some((filename, hash)) = line.split_once(',') {
+            hashes.insert(filename.to_string(), hash.to_string());
+        }
+    }
+
+    Ok(GridHashes { hashes })
+}
+
+#[tauri::command]
+fn detect_current_grid(dota_config_path: Option<String>) -> Result<Option<DetectedGrid>, String> {
+    let config_path = match dota_config_path {
+        Some(path) => PathBuf::from(path),
+        None => {
+            let found_path = find_dota_config_path()?;
+            match found_path {
+                Some(path) => path,
+                None => return Ok(None),
+            }
+        }
+    };
+
+    let grid_file_path = config_path.join("hero_grid_config.json");
+    if !grid_file_path.exists() {
+        return Ok(None);
+    }
+
+    let content =
+        fs::read(&grid_file_path).map_err(|e| format!("Failed to read grid file: {}", e))?;
+    let hash = format!("{:x}", md5::compute(&content));
+
+    // Try to determine grid type from filename patterns in the known hashes
+    // We'll get this from the download_grid_hashes call, but for now return basic info
+    Ok(Some(DetectedGrid {
+        grid_type: "unknown".to_string(),
+        name: "Current Grid".to_string(),
+        date: "Unknown".to_string(),
+        hash,
+        is_known: false,
+    }))
+}
+
+#[tauri::command]
+fn match_grid_hash(
+    grid_hash: String,
+    grid_hashes: GridHashes,
+) -> Result<Option<DetectedGrid>, String> {
+    for (filename, hash) in &grid_hashes.hashes {
+        if hash == &grid_hash {
+            // Parse filename to extract grid type and date
+            // Format: dota2protracker_hero_grid_[type]_config_[date]_p[version]_[patch].json
+            let parts: Vec<&str> = filename.split('_').collect();
+            let grid_type = if filename.contains("d2pt_rating") {
+                "d2pt"
+            } else if filename.contains("high_winrate") {
+                "high_winrate"
+            } else if filename.contains("most_played") {
+                "most_played"
+            } else {
+                "unknown"
+            };
+
+            let date = parts
+                .iter()
+                .find(|p| p.starts_with("20"))
+                .map(|s| s.to_string())
+                .unwrap_or_else(|| "Unknown".to_string());
+
+            return Ok(Some(DetectedGrid {
+                grid_type: grid_type.to_string(),
+                name: filename.clone(),
+                date,
+                hash: hash.clone(),
+                is_known: true,
+            }));
+        }
+    }
+
+    Ok(None)
+}
+
 /*
 #[tauri::command]
 async fn activate_grid(app: AppHandle, grid_name: String, download_url: String) -> Result<(), String> {
@@ -175,8 +304,8 @@ async fn clear_cache(app: AppHandle) -> Result<(), String> {
 
 #[tauri::command]
 fn estimate_system_dpi_scale(
-    screen_width: f64,
-    screen_height: f64,
+    #[allow(unused_variables)] screen_width: f64,
+    #[allow(unused_variables)] screen_height: f64,
     device_pixel_ratio: f64,
 ) -> f64 {
     // Estimate system DPI scaling based on screen dimensions and device pixel ratio
@@ -228,16 +357,192 @@ fn estimate_system_dpi_scale(
     }
 }
 
+#[derive(Default)]
+pub struct AppSettings {
+    pub minimize_to_tray: AtomicBool,
+    pub start_minimized: AtomicBool,
+}
+
+#[tauri::command]
+fn set_minimize_to_tray(_app: tauri::AppHandle, enabled: bool, settings: State<AppSettings>) {
+    println!("set_minimize_to_tray called");
+    println!("Setting minimize_to_tray to: {}", enabled);
+    settings
+        .minimize_to_tray
+        .store(enabled, AtomicOrdering::SeqCst);
+
+    // minimize_to_tray persistence is handled through localStorage -> initialize_settings flow
+}
+
+#[tauri::command]
+fn set_start_minimized(app: tauri::AppHandle, enabled: bool, settings: State<AppSettings>) {
+    println!("Setting start_minimized to: {}", enabled);
+    settings
+        .start_minimized
+        .store(enabled, AtomicOrdering::SeqCst);
+
+    // Also save to persistent file
+    println!("Saving start_minimized={} to file", enabled);
+    if let Ok(app_data_dir) = app.path().app_data_dir() {
+        let file_path = app_data_dir.join("start_minimized.txt");
+        match fs::write(&file_path, if enabled { "true" } else { "false" }) {
+            Ok(_) => println!(
+                "Successfully saved start_minimized to file: {:?}",
+                file_path
+            ),
+            Err(e) => println!("Failed to save start_minimized to file: {}", e),
+        }
+    } else {
+        println!("Could not get app data directory");
+    }
+}
+
+#[tauri::command]
+fn initialize_settings(
+    app: tauri::AppHandle,
+    minimize_to_tray: bool,
+    start_minimized: bool,
+    settings: State<AppSettings>,
+) {
+    println!(
+        "Initializing settings: minimize_to_tray={}, start_minimized={}",
+        minimize_to_tray, start_minimized
+    );
+    settings
+        .minimize_to_tray
+        .store(minimize_to_tray, AtomicOrdering::SeqCst);
+    settings
+        .start_minimized
+        .store(start_minimized, AtomicOrdering::SeqCst);
+
+    // Persistence is handled by frontend localStorage for minimize_to_tray
+    // Save start_minimized to file for persistence across restarts
+    if let Ok(app_data_dir) = app.path().app_data_dir() {
+        let file_path = app_data_dir.join("start_minimized.txt");
+        let _ = fs::write(&file_path, if start_minimized { "true" } else { "false" });
+    }
+}
+
+fn handle_tray_event(tray_icon: &tauri::tray::TrayIcon, event: TrayIconEvent) {
+    match event {
+        TrayIconEvent::DoubleClick { .. } => {
+            // Double click shows the window
+            let app = tray_icon.app_handle();
+            let window = app.get_webview_window("main").unwrap();
+            window.show().unwrap();
+            window.set_focus().unwrap();
+        }
+        _ => {}
+    }
+}
+
+fn handle_menu_event(app: &tauri::AppHandle, event: MenuEvent) {
+    match event.id().as_ref() {
+        "show" => {
+            let window = app.get_webview_window("main").unwrap();
+            window.show().unwrap();
+            window.set_focus().unwrap();
+        }
+        "quit" => {
+            app.exit(0);
+        }
+        _ => {}
+    }
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_store::Builder::default().build())
+        .manage(AppSettings {
+            minimize_to_tray: AtomicBool::new(true),
+            start_minimized: AtomicBool::new(false),
+        })
+        .setup(|app| {
+            let show_item = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
+            let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
+            let menu = Menu::with_items(app, &[&show_item, &quit_item])?;
+
+            let _tray = TrayIconBuilder::new()
+                .icon(app.default_window_icon().unwrap().clone())
+                .menu(&menu)
+                .show_menu_on_left_click(false)
+                .on_tray_icon_event(handle_tray_event)
+                .on_menu_event(handle_menu_event)
+                .build(app)?;
+
+            // Check start_minimized setting from file and set initial window visibility
+            let window = app.get_webview_window("main").unwrap();
+            println!("Checking file for start_minimized setting...");
+            if let Ok(app_data_dir) = app.path().app_data_dir() {
+                let file_path = app_data_dir.join("start_minimized.txt");
+                println!("Looking for start_minimized file: {:?}", file_path);
+                match fs::read_to_string(&file_path) {
+                    Ok(content) => {
+                        println!("Read start_minimized file content: '{}'", content.trim());
+                        let start_minimized = content.trim() == "true";
+                        println!("Parsed start_minimized = {}", start_minimized);
+                        if !start_minimized {
+                            println!("Showing window based on file setting (start_minimized=false)");
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        } else {
+                            println!("Keeping window hidden based on file setting (start_minimized=true)");
+                            // Window is already hidden by default, so do nothing
+                        }
+                    }
+                    Err(e) => {
+                        println!(
+                            "Could not read start_minimized file ({}), defaulting to show window",
+                            e
+                        );
+                        let _ = window.show();
+                        let _ = window.set_focus();
+                    }
+                }
+            } else {
+                println!("Could not get app data directory, defaulting to show window");
+                let _ = window.show();
+                let _ = window.set_focus();
+            }
+
+            Ok(())
+        })
+        .on_window_event(|window, event| match event {
+            tauri::WindowEvent::CloseRequested { api, .. } => {
+                let app = window.app_handle();
+                let minimize_to_tray = app
+                    .state::<AppSettings>()
+                    .minimize_to_tray
+                    .load(AtomicOrdering::SeqCst);
+
+                println!(
+                    "Window close requested, minimize_to_tray = {}",
+                    minimize_to_tray
+                );
+
+                if minimize_to_tray {
+                    println!("Minimizing to tray");
+                    window.hide().unwrap();
+                    api.prevent_close();
+                } else {
+                    println!("Allowing app to close");
+                    // If minimize_to_tray is false, allow the app to close normally
+                }
+            }
+            _ => {}
+        })
         .invoke_handler(tauri::generate_handler![
             find_dota_config_path,
             list_remote_grids,
-            estimate_system_dpi_scale // activate_grid,
-                                      // clear_cache
+            estimate_system_dpi_scale,
+            download_grid_hashes,
+            detect_current_grid,
+            match_grid_hash,
+            set_minimize_to_tray,
+            set_start_minimized,
+            initialize_settings
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
