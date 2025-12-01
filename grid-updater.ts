@@ -1,11 +1,13 @@
 import { chromium } from "playwright";
 import { promises as fs } from "fs";
 import path from "path";
+import { createHash } from "crypto";
 
 const GRIDS_STORE_FOLDER = "./grids";
 const GRIDS_MD = "./grids.md";
 const LAST_UPDATE_FILE = "./last_update.txt";
 const README_MD = "./README.md";
+const GRID_HASHES_FILE = "./grid_hashes.txt";
 
 async function main() {
   const argv = process.argv.slice(2);
@@ -161,7 +163,11 @@ async function main() {
             const savePath = `${GRIDS_STORE_FOLDER}/${suggestedFilename}_${effectiveDate}_${effectivePatchStr}.json`;
             await download.saveAs(savePath);
             savedFiles.push(path.basename(savePath));
-            console.log(`Repair: downloaded ${path.basename(savePath)}`);
+
+            // Calculate and append MD5 hash for the new file
+            const hash = await calculateMD5(savePath);
+            await appendHashEntry(path.basename(savePath), hash);
+            console.log(`Repair: downloaded ${path.basename(savePath)} (hash: ${hash})`);
           }
           const linkFile = (fname?: string) =>
             fname ? `[🔗 Download](grids/${fname})` : "";
@@ -329,6 +335,23 @@ async function main() {
     await fs.writeFile(README_MD, lines.join("\n"), "utf8");
   }
 
+  async function calculateMD5(filePath: string): Promise<string> {
+    const content = await fs.readFile(filePath);
+    const hash = createHash("md5");
+    hash.update(content);
+    return hash.digest("hex");
+  }
+
+  async function appendHashEntry(filename: string, hash: string): Promise<void> {
+    const entry = `${filename},${hash}\n`;
+    try {
+      await fs.appendFile(GRID_HASHES_FILE, entry, "utf8");
+    } catch (error) {
+      // If the file doesn't exist, create it
+      await fs.writeFile(GRID_HASHES_FILE, entry, "utf8");
+    }
+  }
+
   // Determine last recorded update: prefer last_update.txt
   const lastRecorded = await readLastUpdateFile();
   const is_same = !!(
@@ -384,6 +407,11 @@ async function main() {
     await download.saveAs(savePath);
     console.log(`Downloaded file saved as ${savePath}`);
     savedFiles.push(path.basename(savePath));
+
+    // Calculate and append MD5 hash for the new file
+    const hash = await calculateMD5(savePath);
+    await appendHashEntry(path.basename(savePath), hash);
+    console.log(`Added hash entry for ${path.basename(savePath)}: ${hash}`);
   }
 
   if (force && (is_same || entry_exists)) {

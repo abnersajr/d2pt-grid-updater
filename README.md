@@ -10,7 +10,8 @@ Automates downloading the three Meta Hero Grid configuration JSONs from Dota2Pro
 - Naming files with date and patch (example: `..._2025-10-12_p7_39d.json`).
 - Appending a row into `grids.md` with links to the freshly downloaded files.
 - Updating `last_update.txt` and the "Last update" line in this README.
-- Running on a schedule via GitHub Actions every 3 hours (or manually).
+- Generating and maintaining MD5 hashes for all grid files in `grid_hashes.txt` for content-based identification.
+- Running on a schedule via GitHub Actions every 3 hours (or manually via workflow dispatch with optional hash backfilling).
 
 ## Features
 
@@ -18,6 +19,7 @@ Automates downloading the three Meta Hero Grid configuration JSONs from Dota2Pro
 - Force re-download: `-f` or `--force` downloads again even if an entry exists, then syncs README metadata.
 - Repair metadata: `-r` or `--repair` updates `last_update.txt` and README from `grids.md` (or from the site if needed) without downloading files.
 - Auto modal handling: closes the announcement modal if present during scraping.
+- MD5 hash dictionary: maintains `grid_hashes.txt` with content-based MD5 hashes for all grid files, enabling version identification by content rather than filename.
 
 ## Prerequisites
 
@@ -57,4 +59,12 @@ bun run grid-updater.ts -f
 bun run grid-updater.ts --repair
 # or
 bun run grid-updater.ts -r
+```
+
+- Generate or regenerate MD5 hashes for all existing grid files:
+
+```sh
+bun run generate-hashes
+# or
+bun run generate_hashes.ts
 ```

@@ -7,7 +7,8 @@
     "postinstall": "bunx playwright install-deps && bunx playwright install chromium",
     "start": "bun run grid-updater.ts",
     "repair": "bun run grid-updater.ts --repair",
-    "force": "bun run grid-updater.ts --force"
+    "force": "bun run grid-updater.ts --force",
+    "generate-hashes": "bun run generate_hashes.ts"
   },
   "devDependencies": {
     "@types/bun": "1.3.0"
