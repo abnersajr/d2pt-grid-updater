@@ -1,57 +1,16 @@
-.layout {
-  height: 100vh;
-  background-color: #141414;
-  /* Ant Design dark background */
-}
-
-/* Ensure dark background fills the entire viewport */
+/* Basic layout setup */
 body,
 html {
   margin: 0;
   padding: 0;
-  height: 100%;
-  background-color: #000000;
+  min-height: 100%;
 }
 
 #root {
-  height: 100%;
-  background-color: #000000;
+  min-height: 100%;
 }
 
-/* Responsive font sizing for better DPI handling */
-:root {
-  --base-font-size: 14px;
-  --heading-font-size: 16px;
-}
-
-/* Adjust font sizes for high-DPI displays */
-@media (-webkit-min-device-pixel-ratio: 1.5) {
-  :root {
-    --base-font-size: 16px;
-    --heading-font-size: 18px;
-  }
-}
-
-@media (-webkit-min-device-pixel-ratio: 2) {
-  :root {
-    --base-font-size: 18px;
-    --heading-font-size: 20px;
-  }
-}
-
-/* Apply responsive font sizes */
-body {
-  font-size: var(--base-font-size);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-size: var(--heading-font-size) !important;
-}
+/* Font sizing now handled by Ant Design ConfigProvider theme */
 
 /* WSL Development Override - Uncomment when testing in WSL */
 /*
@@ -60,30 +19,5 @@ h6 {
 }
 */
 
-/* Alternative: Force larger fonts for WSL testing */
-.wsl-override {
-  font-size: 18px !important;
-}
 
-.wsl-override .ant-typography {
-  font-size: 18px !important;
-}
-
-.wsl-override .ant-btn {
-  font-size: 16px !important;
-}
-
-/* Ensure table content scales with zoom */
-.ant-table-thead>tr>th,
-.ant-table-tbody>tr>td {
-  font-size: inherit !important;
-}
-
-.ant-table-thead>tr>th {
-  font-weight: 600 !important;
-}
-
-/* Force all text to inherit scaling */
-.layout * {
-  font-size: inherit !important;
-}
+/* Font sizing now handled by Ant Design theme system */

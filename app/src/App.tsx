@@ -108,7 +108,6 @@ function App() {
   const [autoSync, setAutoSync] = useState(true);
   const [startMinimized, setStartMinimized] = useState(false);
   const [minimizeToTray, setMinimizeToTray] = useState(true);
-  const [wslOverride, setWslOverride] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(3); // Default to middle (100%)
   const [showDebugInfo, setShowDebugInfo] = useState(false);
 
@@ -294,13 +293,11 @@ function App() {
       theme={{
         algorithm: theme.darkAlgorithm,
         token: {
-          fontSize: 14,
+          fontSize: getZoomScale(zoomLevel) * 14,
         },
       }}
     >
-      <Layout
-        className={`layout ${wslOverride ? 'wsl-override' : ''}`}
-      >
+      <Layout style={{ minHeight: '100vh' }}>
         <Header style={{ display: "flex", alignItems: "center" }}>
           <Title level={3} style={{ color: "white", margin: 0 }}>
             D2PT Grid Updater
@@ -309,7 +306,6 @@ function App() {
         <Content
           style={{
             padding: "24px",
-            fontSize: `${getZoomScale(zoomLevel) * 100}%`,
           }}
         >
           <Flex vertical gap="large" style={{ width: "100%" }}>
@@ -420,18 +416,6 @@ function App() {
                   <Switch
                     checked={showDebugInfo}
                     onChange={setShowDebugInfo}
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text>WSL Font Size Override (Debug)</Text>
-                  <Switch
-                    checked={wslOverride}
-                    onChange={setWslOverride}
                   />
                 </div>
                 <Button
