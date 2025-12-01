@@ -1,63 +1,95 @@
-# Dota 2 Pro Tracker - Grid Updater
+# D2PT Grid Updater
 
-**Last update**: 2025-11-26 • Patch 7.39e — see [grids.md](./grids.md)
-
-## What is this?
-
-Automates downloading the three Meta Hero Grid configuration JSONs from Dota2ProTracker and keeps this repo up to date by:
-
-- Downloading the latest three grid files (D2PT Rating, High Winrate, Most Played).
-- Naming files with date and patch (example: `..._2025-10-12_p7_39d.json`).
-- Appending a row into `grids.md` with links to the freshly downloaded files.
-- Updating `last_update.txt` and the "Last update" line in this README.
-- Running on a schedule via GitHub Actions every 3 hours (or manually).
+A simple Tauri-based desktop application for Windows, macOS, and Linux to automatically find your Dota 2 installation and keep your hero grids synchronized with the latest versions from the Dota 2 Pro Tracker community.
 
 ## Features
 
-- Idempotent updates: skips adding a duplicate row when the same date/patch already exists in `grids.md`.
-- Force re-download: `-f` or `--force` downloads again even if an entry exists, then syncs README metadata.
-- Repair metadata: `-r` or `--repair` updates `last_update.txt` and README from `grids.md` (or from the site if needed) without downloading files.
-- Auto modal handling: closes the announcement modal if present during scraping.
+- **Automatic Path Detection:** Automatically finds your Dota 2 configuration directory across multiple Steam user profiles.
+- **Remote Grid Library:** Fetches the latest hero grid configurations from a remote repository.
+- **On-Demand Updates:** Apply any grid from the library with a single click.
+- **Local Caching:** Grids are cached locally to save bandwidth and for offline use.
+- **Auto-Sync:** Optional setting to automatically apply the latest grid on application startup.
+- **Cross-Platform:** Built with Tauri to run on Windows, macOS, and Linux.
 
-## Prerequisites
+## Tech Stack & Decisions
 
-- Bun 1.3+.
-  - Playwright browser/deps are auto-installed during `bun install`.
-- Note: It may work with Node.js, but this repo is set up for Bun commands and lockfiles.
+- **[Tauri](https://tauri.app/):** Used for the core desktop application framework. It provides a lightweight, secure, and cross-platform way to build desktop apps using a Rust backend and a webview frontend.
+- **[React](https://react.dev/):** Used for the frontend UI. It provides a modern, component-based architecture for building user interfaces.
+- **[Ant Design](https://ant.design/):** Used as the UI component library. It offers a rich set of high-quality components that accelerates UI development.
+- **[Rust](https://www.rust-lang.org/):** Used for the backend. Its performance, safety, and strong typing make it ideal for handling system-level tasks like file system operations and network requests.
+- **Remote-First Grids:** Grid files are not bundled with the app. They are fetched from a GitHub repository, which allows for updating grids without needing a new application release.
 
-## Setup
+## Development
 
-- Install dependencies:
+To set up a development environment, you will need to install [Node.js/pnpm](https://pnpm.io/installation) and the [Rust toolchain with Tauri prerequisites](https://tauri.app/start/prerequisites/).
 
-```sh
-bun install
+**WSL Development Notes:**
+- For WSL development with Windows display output (`--target x86_64-pc-windows-gnu`), you need:
+  - **Rust toolchain**: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+  - **Windows target**: `rustup target add x86_64-pc-windows-gnu`
+  - **MinGW-w64**: `sudo apt-get install gcc-mingw-w64 g++-mingw-w64`
+  - **Additional libraries**: `sudo apt-get install libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf`
+- This setup allows running the application on WSL while displaying through Windows mechanisms instead of X11.
+- **Note**: The compiled Windows binary cannot run directly in WSL. For development, you have two options:
+  - Install Wine: `sudo apt-get install wine` (allows running Windows .exe in WSL)
+  - Or use the compiled binary with Windows directly (copy `target/x86_64-pc-windows-gnu/debug/app.exe` to Windows and run it there)
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/abnersajr/d2pt-grid-updater.git
+    cd d2pt-grid-updater
+    ```
+
+2.  **Install frontend dependencies:**
+    The project is located in the `/app` directory.
+    ```bash
+    cd app
+    pnpm install
+    ```
+
+3.  **Run the development server:**
+    This will open the application in a development window with hot-reloading for both the frontend and backend.
+
+    **Standard development:**
+    ```bash
+    pnpm tauri:dev
+    # or
+    pnpm tauri dev
+    ```
+
+    **WSL Development (Windows Display):**
+    If you're developing on WSL (Windows Subsystem for Linux) and want the application to display using Windows mechanisms instead of X11, use:
+    ```bash
+    pnpm tauri:dev:wsl
+    # or
+    pnpm tauri dev --target x86_64-pc-windows-gnu
+    ```
+
+## Building
+
+To build the application for production, run the following command from the `/app` directory:
+
+```bash
+pnpm tauri build
 ```
 
-This installs Playwright dependencies and Chromium as part of the postinstall step.
+The compiled installers and binaries will be located in `app/src-tauri/target/release/`.
 
-## Usage (locally)
+## Distribution & Releasing
 
-- Run the updater:
+This project uses **GitHub Actions** to automatically build and release the application when a new version tag is pushed to the repository.
 
-```sh
-bun run grid-updater.ts
-```
+To create a new release:
 
-- Force re-download even if an entry for the same date/patch exists:
+1.  **Commit all your changes** to the `main` branch.
+2.  **Create a new version tag:**
+    The tag must follow the format `vX.Y.Z` (e.g., `v1.0.0`, `v1.0.1`).
+    ```bash
+    git tag v1.0.0
+    ```
+3.  **Push the tag to GitHub:**
+    ```bash
+    git push origin v1.0.0
+    ```
 
-```sh
-bun run grid-updater.ts --force
-# or
-bun run grid-updater.ts -f
-```
-
-- Repair only the metadata (no downloads). Syncs `last_update.txt` and README from the first row in `grids.md` if available; otherwise falls back to the latest site info:
-
-```sh
-bun run grid-updater.ts --repair
-# or
-bun run grid-updater.ts -r
-```
-
----
-For information specific to the Tauri application, please refer to the [App README](app/README.md).
+Pushing the tag will trigger the `release.yml` workflow, which builds the app for Windows, macOS, and Linux, creates a new GitHub Release, and attaches the installers as downloadable artifacts.

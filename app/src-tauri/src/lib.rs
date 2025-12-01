@@ -150,6 +150,31 @@ async fn clear_cache(app: AppHandle) -> Result<(), String> {
 }
 */
 
+#[tauri::command]
+fn get_system_dpi_scale() -> Result<f64, String> {
+    #[cfg(target_os = "windows")]
+    {
+        use windows::Win32::Graphics::Gdi::{GetDC, GetDeviceCaps, ReleaseDC, LOGPIXELSX};
+
+        unsafe {
+            let hdc = GetDC(None);
+            if hdc.is_invalid() {
+                return Ok(1.0);
+            }
+
+            let dpi_x = GetDeviceCaps(hdc, LOGPIXELSX) as f64;
+            ReleaseDC(None, hdc);
+
+            // Standard DPI is 96, so scale factor is current DPI / 96
+            let scale = dpi_x / 96.0;
+            Ok(scale)
+        }
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    Ok(1.0)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -157,7 +182,8 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::default().build())
         .invoke_handler(tauri::generate_handler![
             find_dota_config_path,
-            list_remote_grids
+            list_remote_grids,
+            get_system_dpi_scale
             // activate_grid,
             // clear_cache
         ])

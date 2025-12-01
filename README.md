@@ -10,8 +10,12 @@ Automates downloading the three Meta Hero Grid configuration JSONs from Dota2Pro
 - Naming files with date and patch (example: `..._2025-10-12_p7_39d.json`).
 - Appending a row into `grids.md` with links to the freshly downloaded files.
 - Updating `last_update.txt` and the "Last update" line in this README.
+<<<<<<< HEAD
 - Generating and maintaining MD5 hashes for all grid files in `grid_hashes.txt` for content-based identification.
 - Running on a schedule via GitHub Actions every 3 hours (or manually via workflow dispatch with optional hash backfilling).
+=======
+- Running on a schedule via GitHub Actions every 3 hours (or manually).
+>>>>>>> c2bbefa (working app)
 
 ## Features
 
@@ -19,7 +23,10 @@ Automates downloading the three Meta Hero Grid configuration JSONs from Dota2Pro
 - Force re-download: `-f` or `--force` downloads again even if an entry exists, then syncs README metadata.
 - Repair metadata: `-r` or `--repair` updates `last_update.txt` and README from `grids.md` (or from the site if needed) without downloading files.
 - Auto modal handling: closes the announcement modal if present during scraping.
+<<<<<<< HEAD
 - MD5 hash dictionary: maintains `grid_hashes.txt` with content-based MD5 hashes for all grid files, enabling version identification by content rather than filename.
+=======
+>>>>>>> c2bbefa (working app)
 
 ## Prerequisites
 
@@ -68,3 +75,6 @@ bun run generate-hashes
 # or
 bun run generate_hashes.ts
 ```
+
+---
+For information specific to the Tauri application, please refer to the [App README](app/README.md).
