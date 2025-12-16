@@ -1,0 +1,2570 @@
+{
+  "version": 3,
+  "configs": [
+    {
+      "config_name": "Dota2ProTracker 7.38c - All Roles",
+      "categories": [
+        {
+          "category_name": "Carry",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 455,
+          "height": 75,
+          "hero_ids": [
+            10,
+            46,
+            44,
+            93,
+            53,
+            1,
+            8
+          ]
+        },
+        {
+          "category_name": "Mid",
+          "x_position": 0,
+          "y_position": 95,
+          "width": 455,
+          "height": 75,
+          "hero_ids": [
+            39,
+            13,
+            17,
+            106,
+            74,
+            76,
+            35
+          ]
+        },
+        {
+          "category_name": "Offlane",
+          "x_position": 0,
+          "y_position": 190,
+          "width": 455,
+          "height": 75,
+          "hero_ids": [
+            129,
+            42,
+            94,
+            29,
+            104,
+            7,
+            60
+          ]
+        },
+        {
+          "category_name": "Support",
+          "x_position": 0,
+          "y_position": 285,
+          "width": 455,
+          "height": 75,
+          "hero_ids": [
+            86,
+            14,
+            7,
+            63,
+            21,
+            22,
+            71
+          ]
+        },
+        {
+          "category_name": "Hard Support",
+          "x_position": 0,
+          "y_position": 380,
+          "width": 455,
+          "height": 75,
+          "hero_ids": [
+            68,
+            75,
+            64,
+            26,
+            27,
+            37,
+            5
+          ]
+        },
+        {
+          "category_name": "All Heroes",
+          "x_position": 500,
+          "y_position": 0,
+          "width": 600,
+          "height": 600,
+          "hero_ids": [
+            102,
+            73,
+            68,
+            1,
+            113,
+            2,
+            3,
+            65,
+            38,
+            4,
+            62,
+            78,
+            99,
+            61,
+            96,
+            81,
+            66,
+            56,
+            51,
+            5,
+            55,
+            119,
+            135,
+            50,
+            43,
+            87,
+            69,
+            49,
+            6,
+            107,
+            7,
+            103,
+            106,
+            58,
+            33,
+            41,
+            121,
+            72,
+            123,
+            59,
+            74,
+            91,
+            64,
+            8,
+            90,
+            145,
+            23,
+            104,
+            52,
+            31,
+            54,
+            25,
+            26,
+            80,
+            48,
+            77,
+            97,
+            136,
+            129,
+            94,
+            82,
+            9,
+            114,
+            10,
+            138,
+            89,
+            53,
+            36,
+            60,
+            88,
+            84,
+            57,
+            111,
+            76,
+            120,
+            44,
+            12,
+            110,
+            137,
+            13,
+            14,
+            45,
+            39,
+            15,
+            32,
+            131,
+            86,
+            16,
+            79,
+            11,
+            27,
+            75,
+            101,
+            28,
+            93,
+            128,
+            35,
+            67,
+            71,
+            17,
+            18,
+            105,
+            46,
+            109,
+            29,
+            98,
+            34,
+            19,
+            83,
+            95,
+            100,
+            108,
+            85,
+            70,
+            20,
+            40,
+            47,
+            92,
+            126,
+            37,
+            63,
+            21,
+            112,
+            30,
+            42,
+            22
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "Dota2ProTracker 7.38c - Carry",
+      "categories": [
+        {
+          "category_name": "Top Heroes Pos 1",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 65,
+          "height": 525,
+          "hero_ids": [
+            10,
+            46,
+            44,
+            93,
+            53,
+            1,
+            8
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            42,
+            17,
+            68,
+            106,
+            86,
+            94,
+            29
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            86,
+            92,
+            73,
+            2,
+            16,
+            29,
+            55
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            1,
+            42,
+            17,
+            39,
+            53,
+            46
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            80,
+            119,
+            14,
+            18,
+            23,
+            25,
+            55
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            42,
+            75,
+            13,
+            39,
+            94,
+            104
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            79,
+            73,
+            94,
+            19,
+            41,
+            61,
+            90
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            86,
+            39,
+            68,
+            106,
+            13,
+            75
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            123,
+            39,
+            56,
+            9,
+            20,
+            61,
+            69
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            129,
+            37,
+            68,
+            75,
+            64,
+            14,
+            97
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            3,
+            98,
+            42,
+            57,
+            59,
+            61,
+            75
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            17,
+            86,
+            68,
+            129,
+            53,
+            39,
+            10
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            135,
+            22,
+            10,
+            34,
+            57,
+            65,
+            88
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            104,
+            64,
+            68,
+            13,
+            74,
+            86,
+            75
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            22,
+            53,
+            103,
+            61,
+            69,
+            94,
+            128
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            75,
+            94,
+            86,
+            13,
+            106,
+            53,
+            46
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            110,
+            52,
+            12,
+            88,
+            92,
+            100,
+            121
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            75,
+            106,
+            68,
+            42,
+            94,
+            129,
+            39
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            45,
+            65,
+            68,
+            2,
+            10,
+            26,
+            35
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            106,
+            44,
+            74,
+            17,
+            129,
+            75
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            107,
+            83,
+            38,
+            70,
+            114,
+            50,
+            60
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            26,
+            42,
+            75,
+            68,
+            13,
+            7
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            135,
+            32,
+            26,
+            35,
+            65,
+            83,
+            94
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            94,
+            44,
+            75,
+            29,
+            86,
+            93,
+            64
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            83,
+            20,
+            56,
+            136,
+            59,
+            98,
+            19
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            39,
+            64,
+            76,
+            17,
+            26,
+            75,
+            42
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            50,
+            135,
+            40,
+            1,
+            10,
+            23,
+            33
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            7,
+            17,
+            106,
+            44,
+            68,
+            46,
+            64
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            90,
+            138,
+            137,
+            4,
+            18,
+            20,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "Dota2ProTracker 7.38c - Mid",
+      "categories": [
+        {
+          "category_name": "Top Heroes Pos 2",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 65,
+          "height": 525,
+          "hero_ids": [
+            39,
+            13,
+            17,
+            106,
+            74,
+            76,
+            35
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            42,
+            46,
+            68,
+            75,
+            10,
+            104,
+            93
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            40,
+            107,
+            114,
+            11,
+            58,
+            8,
+            9
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            129,
+            44,
+            68,
+            17,
+            64,
+            106,
+            29
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            77,
+            41,
+            89,
+            119,
+            137,
+            2
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            46,
+            75,
+            68,
+            86,
+            42,
+            93
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            31,
+            33,
+            1,
+            54,
+            86,
+            89,
+            93
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            74,
+            10,
+            1,
+            106,
+            39,
+            42
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            3,
+            22,
+            31,
+            77,
+            102,
+            4,
+            19
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            7,
+            64,
+            10,
+            129,
+            46,
+            94,
+            60
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            38,
+            56,
+            99,
+            102,
+            106,
+            25,
+            41
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            13,
+            129,
+            29,
+            44,
+            93,
+            86,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            82,
+            61,
+            32,
+            93,
+            41,
+            50,
+            25
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            53,
+            94,
+            10,
+            46,
+            68,
+            86
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            59,
+            35,
+            61,
+            64,
+            82,
+            1,
+            9
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            17,
+            39,
+            64,
+            75,
+            13,
+            86,
+            46
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            81,
+            99,
+            32,
+            50,
+            56,
+            23,
+            47
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            46,
+            29,
+            10,
+            129,
+            93,
+            75,
+            27
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            72,
+            73,
+            2,
+            96,
+            106,
+            1,
+            4
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            44,
+            39,
+            106,
+            75,
+            68,
+            93
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            102,
+            21,
+            56,
+            57,
+            62,
+            100,
+            126
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            7,
+            135,
+            46,
+            42,
+            10,
+            129,
+            75
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            97,
+            123,
+            58,
+            59,
+            93,
+            126,
+            95
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            94,
+            93,
+            74,
+            29,
+            64,
+            68,
+            106
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            110,
+            113,
+            121,
+            1,
+            29,
+            32,
+            39
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            75,
+            60,
+            14,
+            93,
+            29,
+            46,
+            7
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            58,
+            25,
+            103,
+            19,
+            29,
+            43,
+            44
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            86,
+            106,
+            46,
+            75,
+            94,
+            17,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            9,
+            84,
+            93,
+            100,
+            72,
+            31,
+            57
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "Dota2ProTracker 7.38c - Offlane",
+      "categories": [
+        {
+          "category_name": "Top Heroes Pos 3",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 65,
+          "height": 525,
+          "hero_ids": [
+            129,
+            42,
+            94,
+            29,
+            104,
+            7,
+            60
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            13,
+            17,
+            46,
+            10,
+            64,
+            75
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            126,
+            94,
+            50,
+            6,
+            15,
+            18,
+            19
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            106,
+            44,
+            94,
+            42,
+            17,
+            10,
+            64
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            73,
+            56,
+            107,
+            40,
+            23,
+            25,
+            60
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            68,
+            46,
+            39,
+            10,
+            53,
+            106,
+            13
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            40,
+            52,
+            79,
+            3,
+            47,
+            94,
+            33
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            94,
+            17,
+            74,
+            29,
+            75,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            82,
+            102,
+            145,
+            9,
+            33,
+            41,
+            46
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            46,
+            106,
+            53,
+            10,
+            17,
+            13,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            43,
+            83,
+            84,
+            98,
+            1,
+            15,
+            23
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            39,
+            106,
+            35,
+            75,
+            86,
+            129
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            88,
+            102,
+            39,
+            66,
+            98,
+            104,
+            18
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            10,
+            46,
+            64,
+            13,
+            75,
+            86
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            94,
+            9,
+            114,
+            32,
+            39,
+            42,
+            57
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            94,
+            10,
+            129,
+            46,
+            64,
+            39,
+            17
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            129,
+            33,
+            55,
+            56,
+            70,
+            72,
+            94
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            13,
+            10,
+            86,
+            8,
+            46,
+            39
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            32,
+            40,
+            19,
+            41,
+            59,
+            73
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            86,
+            76,
+            106,
+            75,
+            39,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            123,
+            32,
+            59,
+            100,
+            29,
+            56,
+            2
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            68,
+            106,
+            13,
+            74,
+            64,
+            46
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            98,
+            103,
+            107,
+            3,
+            10,
+            29,
+            81
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            129,
+            17,
+            68,
+            29,
+            13,
+            106,
+            53
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            1,
+            56,
+            39,
+            99,
+            14,
+            25,
+            33
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            39,
+            35,
+            75,
+            10,
+            13,
+            46
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            26,
+            94,
+            129,
+            135,
+            31,
+            42,
+            44
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            17,
+            75,
+            44,
+            68,
+            39,
+            29
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            1,
+            33,
+            47,
+            56,
+            3,
+            9,
+            13
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "Dota2ProTracker 7.38c - Support",
+      "categories": [
+        {
+          "category_name": "Top Heroes Pos 4",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 65,
+          "height": 525,
+          "hero_ids": [
+            86,
+            14,
+            7,
+            63,
+            21,
+            22,
+            71
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            13,
+            10,
+            74,
+            68,
+            39,
+            46,
+            129
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            20,
+            73,
+            74,
+            123,
+            129,
+            4,
+            10
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            106,
+            75,
+            44,
+            17,
+            26,
+            13
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            138,
+            37,
+            107,
+            22,
+            32,
+            40,
+            64
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            75,
+            35,
+            10,
+            64,
+            17,
+            13,
+            106
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            43,
+            9,
+            22,
+            40,
+            71,
+            101,
+            1
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            86,
+            129,
+            39,
+            64,
+            70,
+            74
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            69,
+            97,
+            126,
+            40,
+            73,
+            83,
+            84
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            42,
+            17,
+            39,
+            46,
+            68,
+            10
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            88,
+            44,
+            113,
+            136,
+            23,
+            38,
+            39
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            86,
+            106,
+            39,
+            17,
+            75,
+            42,
+            129
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            107,
+            112,
+            9,
+            20,
+            33,
+            41,
+            55
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            68,
+            74,
+            42,
+            46,
+            10,
+            64
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            38,
+            66,
+            71,
+            99,
+            3,
+            10,
+            32
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            129,
+            17,
+            93,
+            46,
+            64,
+            13,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            40,
+            50,
+            52,
+            79,
+            128,
+            5,
+            25
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            13,
+            39,
+            17,
+            106,
+            46,
+            68,
+            64
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            53,
+            60,
+            61,
+            65,
+            84,
+            106
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            13,
+            46,
+            64,
+            39,
+            75,
+            106
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            33,
+            84,
+            93,
+            18,
+            29,
+            37,
+            42
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            10,
+            46,
+            104,
+            64,
+            93,
+            39,
+            17
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            53,
+            15,
+            40,
+            101,
+            10,
+            12,
+            14
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            10,
+            68,
+            17,
+            42,
+            86,
+            39
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            45,
+            56,
+            57,
+            94,
+            136,
+            17,
+            23
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            55,
+            75,
+            10,
+            46,
+            39,
+            53,
+            74
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            64,
+            77,
+            1,
+            23,
+            73,
+            82,
+            3
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            129,
+            75,
+            39,
+            86,
+            13,
+            106
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            32,
+            36,
+            77,
+            88,
+            113,
+            1,
+            35
+          ]
+        }
+      ]
+    },
+    {
+      "config_name": "Dota2ProTracker 7.38c - Hard Support",
+      "categories": [
+        {
+          "category_name": "Top Heroes Pos 5",
+          "x_position": 0,
+          "y_position": 0,
+          "width": 65,
+          "height": 525,
+          "hero_ids": [
+            68,
+            75,
+            64,
+            26,
+            27,
+            37,
+            5
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            42,
+            10,
+            13,
+            39,
+            46,
+            93,
+            86
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            84,
+            73,
+            128,
+            4,
+            13,
+            56,
+            101
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            106,
+            44,
+            94,
+            129,
+            75,
+            17,
+            13
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 20,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            50,
+            104,
+            119,
+            137,
+            25,
+            28,
+            33
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            14,
+            46,
+            13,
+            39,
+            10,
+            93,
+            129
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            33,
+            45,
+            68,
+            93,
+            135,
+            1,
+            9
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            64,
+            106,
+            39,
+            10,
+            94,
+            35
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 95,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            50,
+            107,
+            20,
+            32,
+            82,
+            83,
+            88
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            106,
+            17,
+            8,
+            13,
+            29,
+            129,
+            10
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            63,
+            101,
+            104,
+            128,
+            65,
+            102,
+            136
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            17,
+            93,
+            104,
+            106,
+            10,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 170,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            39,
+            2,
+            42,
+            47,
+            59,
+            61,
+            75
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            74,
+            39,
+            13,
+            46,
+            86,
+            10,
+            14
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            145,
+            52,
+            3,
+            70,
+            1,
+            25,
+            44
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            93,
+            13,
+            75,
+            64,
+            68,
+            86
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 245,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            52,
+            88,
+            29,
+            35,
+            40,
+            50
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            10,
+            106,
+            70,
+            17,
+            93,
+            63,
+            74
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            20,
+            67,
+            104,
+            109,
+            14,
+            40
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            106,
+            44,
+            10,
+            39,
+            86,
+            29,
+            68
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 320,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            107,
+            79,
+            84,
+            102,
+            106,
+            9,
+            56
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            46,
+            129,
+            13,
+            39,
+            17,
+            10,
+            94
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            81,
+            72,
+            94,
+            129,
+            31,
+            39,
+            69
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            93,
+            17,
+            44,
+            64,
+            86,
+            75,
+            13
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 395,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            31,
+            47,
+            50,
+            63,
+            64,
+            65,
+            88
+          ]
+        },
+        {
+          "category_name": "Best with",
+          "x_position": 85,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            42,
+            13,
+            10,
+            46,
+            86,
+            129,
+            106
+          ]
+        },
+        {
+          "category_name": "Worst with",
+          "x_position": 455,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            21,
+            32,
+            71,
+            4,
+            12,
+            72,
+            73
+          ]
+        },
+        {
+          "category_name": "Best against",
+          "x_position": 825,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            44,
+            86,
+            129,
+            17,
+            64,
+            46,
+            13
+          ]
+        },
+        {
+          "category_name": "Worst against",
+          "x_position": 1195,
+          "y_position": 470,
+          "width": 350,
+          "height": 55,
+          "hero_ids": [
+            39,
+            82,
+            15,
+            69,
+            81,
+            103,
+            135
+          ]
+        }
+      ]
+    }
+  ]
+}
