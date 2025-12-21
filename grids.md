@@ -1,5 +1,6 @@
 | Date | Patch | D2PT Rating | High Winrate | Most Played |
 | ---- | ----- | ----------- | ------------ | ----------- |
+| 2025-12-21 | 7.40 | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2025-12-21_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2025-12-21_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2025-12-21_p7_40.json) |
 | 2025-12-20 | 7.40 | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2025-12-20_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2025-12-20_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2025-12-20_p7_40.json) |
 | 2025-12-19 | 7.40 | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2025-12-19_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2025-12-19_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2025-12-19_p7_40.json) |
 | 2025-12-18 | 7.40 | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2025-12-18_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2025-12-18_p7_40.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2025-12-18_p7_40.json) |
