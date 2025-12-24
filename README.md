@@ -1,6 +1,6 @@
 # Dota 2 Pro Tracker - Grid Updater
 
-**Last update**: 2025-12-23 • Patch 7.40 — see [grids.md](./grids.md)
+**Last update**: unknown_date • Patch unknown_patch_raw — see [grids.md](./grids.md)
 
 ## What is this?
 
