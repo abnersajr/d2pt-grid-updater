@@ -1,2 +1,2 @@
-7.40b
-2026-01-16
+unknown_patch_raw
+unknown_date
