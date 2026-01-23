@@ -1,2 +1,2 @@
-unknown_patch_raw
-unknown_date
+7.40c
+2026-01-23
