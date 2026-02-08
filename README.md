@@ -1,6 +1,6 @@
 # Dota 2 Pro Tracker - Grid Updater
 
-**Last update**: 2026-02-01 • Patch 7.40c — see [grids.md](./grids.md)
+**Last update**: 2026-02-08 • Patch 7.40c — see [grids.md](./grids.md)
 
 ## What is this?
 
