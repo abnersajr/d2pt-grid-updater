@@ -14,7 +14,6 @@ import {
   Alert,
 } from "antd";
 import { invoke } from "@tauri-apps/api/core";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import "./App.css";
 
 const { Header, Content, Footer } = Layout;
@@ -48,8 +47,6 @@ interface DetectedGrid {
 interface GridHashes {
   hashes: { [filename: string]: string };
 }
-
-
 
 function App() {
   const [dotaPath, setDotaPath] = useState("Searching for Dota 2 path...");
@@ -85,7 +82,7 @@ function App() {
     try {
       await invoke("activate_grid", {
         gridName: grid.name,
-        downloadUrl: grid.download_url
+        downloadUrl: grid.download_url,
       });
 
       notification.success({
@@ -97,11 +94,14 @@ function App() {
       // Refresh the detected grid after applying
       const path: string | null = await invoke("find_dota_config_path");
       if (path) {
-        const detected: DetectedGrid | null = await invoke("detect_current_grid", { dotaConfigPath: path });
+        const detected: DetectedGrid | null = await invoke(
+          "detect_current_grid",
+          { dotaConfigPath: path },
+        );
         if (detected && gridHashes) {
           const matched: DetectedGrid | null = await invoke("match_grid_hash", {
             gridHash: detected.hash,
-            gridHashes
+            gridHashes,
           });
           setDetectedGrid(matched || { ...detected, is_known: false });
         }
@@ -127,11 +127,14 @@ function App() {
         setDotaPath(selectedPath);
 
         // Re-run grid detection with the new path
-        const detected: DetectedGrid | null = await invoke("detect_current_grid", { dotaConfigPath: selectedPath });
+        const detected: DetectedGrid | null = await invoke(
+          "detect_current_grid",
+          { dotaConfigPath: selectedPath },
+        );
         if (detected && gridHashes) {
           const matched: DetectedGrid | null = await invoke("match_grid_hash", {
             gridHash: detected.hash,
-            gridHashes
+            gridHashes,
           });
           setDetectedGrid(matched || { ...detected, is_known: false });
         } else {
@@ -158,7 +161,8 @@ function App() {
   const getGridRender = (gridType: string) => (grid?: Grid) => {
     if (!grid) return "N/A";
 
-    const isCurrent = detectedGrid?.is_known &&
+    const isCurrent =
+      detectedGrid?.is_known &&
       detectedGrid.grid_type === gridType &&
       detectedGrid.name === grid.name;
 
@@ -176,11 +180,11 @@ function App() {
           <Text
             title="Currently Applied"
             style={{
-              color: '#52c41a',
-              fontSize: '16px',
-              textShadow: '0 0 4px rgba(82, 196, 26, 0.6)',
-              marginLeft: '4px',
-              cursor: 'help'
+              color: "#52c41a",
+              fontSize: "16px",
+              textShadow: "0 0 4px rgba(82, 196, 26, 0.6)",
+              marginLeft: "4px",
+              cursor: "help",
             }}
           >
             ●
@@ -230,7 +234,7 @@ function App() {
   };
 
   const handleZoomIn = () => {
-    setZoomLevel(prev => {
+    setZoomLevel((prev) => {
       const newLevel = Math.min(prev + 1, 5);
       saveSetting("zoomLevel", newLevel);
       return newLevel;
@@ -238,7 +242,7 @@ function App() {
   };
 
   const handleZoomOut = () => {
-    setZoomLevel(prev => {
+    setZoomLevel((prev) => {
       const newLevel = Math.max(prev - 1, 1);
       saveSetting("zoomLevel", newLevel);
       return newLevel;
@@ -256,11 +260,11 @@ function App() {
     const physicalScreenHeight = Math.round(effectiveScreenHeight * dpi);
 
     // Get system DPI scale estimate from Tauri backend
-    const systemDpiScale = await invoke("estimate_system_dpi_scale", {
+    const systemDpiScale = (await invoke("estimate_system_dpi_scale", {
       screenWidth: effectiveScreenWidth,
       screenHeight: effectiveScreenHeight,
       devicePixelRatio: dpi,
-    }) as number;
+    })) as number;
 
     const screenInfo = {
       devicePixelRatio: dpi,
@@ -275,14 +279,14 @@ function App() {
       systemDpiScale,
     };
 
-    console.log('DPI Debug Info Updated:', screenInfo);
+    console.log("DPI Debug Info Updated:", screenInfo);
     setDpiInfo(screenInfo);
 
     // Apply DPI-based scaling adjustments
-    if (dpi >= 1.5) {
-      document.documentElement.style.fontSize = '18px';
-    } else if (dpi >= 2.0) {
-      document.documentElement.style.fontSize = '20px';
+    if (dpi >= 2.0) {
+      document.documentElement.style.fontSize = "20px";
+    } else if (dpi >= 1.5) {
+      document.documentElement.style.fontSize = "18px";
     }
   };
 
@@ -295,8 +299,8 @@ function App() {
     physicalScreenHeight: 0,
     windowInnerWidth: 0,
     windowInnerHeight: 0,
-    userAgent: '',
-    platform: '',
+    userAgent: "",
+    platform: "",
     systemDpiScale: 1,
   });
 
@@ -316,22 +320,30 @@ function App() {
           storedStartMinimized,
           storedMinimizeToTray,
           storedZoomLevel,
-          storedShowDebugInfo
+          storedShowDebugInfo,
         });
 
         // Set state with loaded values (or defaults)
-        const loadedAutoSync = storedAutoSync ? JSON.parse(storedAutoSync) : true;
-        const loadedStartMinimized = storedStartMinimized ? JSON.parse(storedStartMinimized) : false;
-        const loadedMinimizeToTray = storedMinimizeToTray ? JSON.parse(storedMinimizeToTray) : true;
+        const loadedAutoSync = storedAutoSync
+          ? JSON.parse(storedAutoSync)
+          : true;
+        const loadedStartMinimized = storedStartMinimized
+          ? JSON.parse(storedStartMinimized)
+          : false;
+        const loadedMinimizeToTray = storedMinimizeToTray
+          ? JSON.parse(storedMinimizeToTray)
+          : true;
         const loadedZoomLevel = storedZoomLevel ? parseInt(storedZoomLevel) : 3;
-        const loadedShowDebugInfo = storedShowDebugInfo ? JSON.parse(storedShowDebugInfo) : false;
+        const loadedShowDebugInfo = storedShowDebugInfo
+          ? JSON.parse(storedShowDebugInfo)
+          : false;
 
         console.log("Setting state to:", {
           loadedAutoSync,
           loadedStartMinimized,
           loadedMinimizeToTray,
           loadedZoomLevel,
-          loadedShowDebugInfo
+          loadedShowDebugInfo,
         });
 
         setAutoSync(loadedAutoSync);
@@ -343,15 +355,14 @@ function App() {
         // Initialize backend settings
         console.log("Initializing backend with:", {
           minimizeToTray: loadedMinimizeToTray,
-          startMinimized: loadedStartMinimized
+          startMinimized: loadedStartMinimized,
         });
         await invoke("initialize_settings", {
           minimizeToTray: loadedMinimizeToTray,
-          startMinimized: loadedStartMinimized
+          startMinimized: loadedStartMinimized,
         });
 
         // Window visibility is now handled by the Rust backend during setup
-
       } catch (error) {
         console.error("Failed to initialize settings:", error);
       }
@@ -376,13 +387,19 @@ function App() {
 
         // Detect current grid if Dota path was found
         if (path) {
-          const detected: DetectedGrid | null = await invoke("detect_current_grid", { dotaConfigPath: path });
+          const detected: DetectedGrid | null = await invoke(
+            "detect_current_grid",
+            { dotaConfigPath: path },
+          );
           if (detected) {
             // Match the detected grid against known hashes
-            const matched: DetectedGrid | null = await invoke("match_grid_hash", {
-              gridHash: detected.hash,
-              gridHashes: hashes
-            });
+            const matched: DetectedGrid | null = await invoke(
+              "match_grid_hash",
+              {
+                gridHash: detected.hash,
+                gridHashes: hashes,
+              },
+            );
             setDetectedGrid(matched || { ...detected, is_known: false });
           } else {
             setDetectedGrid(null);
@@ -390,29 +407,34 @@ function App() {
         }
 
         const remoteGrids: Grid[] = await invoke("list_remote_grids");
-        const grouped = remoteGrids.reduce((acc, grid) => {
-          const { date, name } = grid;
-          const patchMatch = name.match(/_p(\d+)_(\w+)\.json/);
-          const patch = patchMatch ? `${patchMatch[1]}.${patchMatch[2]}` : "N/A";
-          if (!acc[date]) {
-            acc[date] = {
-              key: date,
-              date,
-              patch,
-            };
-          }
-          if (name.includes("d2pt_rating")) {
-            acc[date].d2pt = grid;
-          } else if (name.includes("high_winrate")) {
-            acc[date].highWinrate = grid;
-          } else if (name.includes("most_played")) {
-            acc[date].mostPlayed = grid;
-          }
-          return acc;
-        }, {} as { [date: string]: GroupedGrid });
+        const grouped = remoteGrids.reduce(
+          (acc, grid) => {
+            const { date, name } = grid;
+            const patchMatch = name.match(/_p(\d+)_(\w+)\.json/);
+            const patch = patchMatch
+              ? `${patchMatch[1]}.${patchMatch[2]}`
+              : "N/A";
+            if (!acc[date]) {
+              acc[date] = {
+                key: date,
+                date,
+                patch,
+              };
+            }
+            if (name.includes("d2pt_rating")) {
+              acc[date].d2pt = grid;
+            } else if (name.includes("high_winrate")) {
+              acc[date].highWinrate = grid;
+            } else if (name.includes("most_played")) {
+              acc[date].mostPlayed = grid;
+            }
+            return acc;
+          },
+          {} as { [date: string]: GroupedGrid },
+        );
 
         setGrids(
-          Object.values(grouped).sort((a, b) => b.date.localeCompare(a.date))
+          Object.values(grouped).sort((a, b) => b.date.localeCompare(a.date)),
         );
       } catch (e: any) {
         setError(e.toString());
@@ -449,7 +471,7 @@ function App() {
         currentScreenInfo.devicePixelRatio !== lastScreenInfo.devicePixelRatio;
 
       if (screenChanged) {
-        console.log('Monitor change detected, updating DPI info');
+        console.log("Monitor change detected, updating DPI info");
         lastScreenInfo = currentScreenInfo;
       }
 
@@ -458,7 +480,7 @@ function App() {
     };
 
     // Listen for resize events (may trigger when moving between monitors)
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Also poll every 2 seconds as a fallback for monitor changes
     const pollInterval = setInterval(() => {
@@ -473,7 +495,7 @@ function App() {
         currentScreenInfo.height !== lastScreenInfo.height ||
         currentScreenInfo.devicePixelRatio !== lastScreenInfo.devicePixelRatio
       ) {
-        console.log('Monitor change detected via polling, updating DPI info');
+        console.log("Monitor change detected via polling, updating DPI info");
         lastScreenInfo = currentScreenInfo;
         updateDpiInfo();
       }
@@ -481,7 +503,7 @@ function App() {
 
     // Cleanup function
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       clearInterval(pollInterval);
     };
   }, []);
@@ -495,7 +517,7 @@ function App() {
         },
       }}
     >
-      <Layout style={{ minHeight: '100vh' }}>
+      <Layout style={{ minHeight: "100vh" }}>
         <Header style={{ display: "flex", alignItems: "center" }}>
           <Title level={3} style={{ color: "white", margin: 0 }}>
             D2PT Grid Updater
@@ -517,7 +539,11 @@ function App() {
             )}
 
             <Card title="Status">
-              <Space direction="vertical" size="small" style={{ width: "100%" }}>
+              <Space
+                direction="vertical"
+                size="small"
+                style={{ width: "100%" }}
+              >
                 <div>
                   <Space>
                     <Text strong>Dota 2 Config Path: </Text>
@@ -526,13 +552,15 @@ function App() {
                       onClick={handleSelectDotaPath}
                       loading={isSelectingPath}
                       disabled={isSelectingPath}
-                      style={{ fontSize: '12px', padding: '0 8px' }}
+                      style={{ fontSize: "12px", padding: "0 8px" }}
                     >
                       Change
                     </Button>
                   </Space>
                   <br />
-                  <Text code style={{ display: 'block', marginTop: '4px' }}>{dotaPath}</Text>
+                  <Text code style={{ display: "block", marginTop: "4px" }}>
+                    {dotaPath}
+                  </Text>
                 </div>
                 <div>
                   <Text strong>Current Grid: </Text>
@@ -540,8 +568,7 @@ function App() {
                     <Text code>
                       {detectedGrid.is_known
                         ? `${detectedGrid.name} (${detectedGrid.date})`
-                        : `Custom Grid (MD5: ${detectedGrid.hash.substring(0, 8)}...)`
-                      }
+                        : `Custom Grid (MD5: ${detectedGrid.hash.substring(0, 8)}...)`}
                     </Text>
                   ) : (
                     <Text code>No grid file found</Text>
@@ -552,10 +579,11 @@ function App() {
                     <div>
                       <Text strong>DPI Debug Info: </Text>
                       <Text code>
-                        DPR: {dpiInfo.devicePixelRatio} |
-                        Physical Screen: {dpiInfo.physicalScreenWidth}x{dpiInfo.physicalScreenHeight} |
-                        Effective Screen: {dpiInfo.screenWidth}x{dpiInfo.screenHeight} |
-                        Window: {dpiInfo.windowInnerWidth}x{dpiInfo.windowInnerHeight} |
+                        DPR: {dpiInfo.devicePixelRatio} | Physical Screen:{" "}
+                        {dpiInfo.physicalScreenWidth}x
+                        {dpiInfo.physicalScreenHeight} | Effective Screen:{" "}
+                        {dpiInfo.screenWidth}x{dpiInfo.screenHeight} | Window:{" "}
+                        {dpiInfo.windowInnerWidth}x{dpiInfo.windowInnerHeight} |
                         System Scale: {dpiInfo.systemDpiScale}x
                       </Text>
                     </div>
@@ -599,13 +627,21 @@ function App() {
                   <Switch
                     checked={startMinimized}
                     onChange={async (checked) => {
-                      console.log("Start minimized switch changed to:", checked);
+                      console.log(
+                        "Start minimized switch changed to:",
+                        checked,
+                      );
                       setStartMinimized(checked);
                       saveSetting("startMinimized", checked);
                       try {
-                        await invoke("set_start_minimized", { enabled: checked });
+                        await invoke("set_start_minimized", {
+                          enabled: checked,
+                        });
                       } catch (error) {
-                        console.error("Failed to update start minimized setting:", error);
+                        console.error(
+                          "Failed to update start minimized setting:",
+                          error,
+                        );
                       }
                     }}
                   />
@@ -620,13 +656,21 @@ function App() {
                   <Switch
                     checked={minimizeToTray}
                     onChange={async (checked) => {
-                      console.log("Minimize to tray switch changed to:", checked);
+                      console.log(
+                        "Minimize to tray switch changed to:",
+                        checked,
+                      );
                       setMinimizeToTray(checked);
                       saveSetting("minimizeToTray", checked);
                       try {
-                        await invoke("set_minimize_to_tray", { enabled: checked });
+                        await invoke("set_minimize_to_tray", {
+                          enabled: checked,
+                        });
                       } catch (error) {
-                        console.error("Failed to update minimize to tray setting:", error);
+                        console.error(
+                          "Failed to update minimize to tray setting:",
+                          error,
+                        );
                       }
                     }}
                   />
@@ -640,11 +684,23 @@ function App() {
                 >
                   <Text>Font Size / Zoom</Text>
                   <Space>
-                    <Button size="small" onClick={handleZoomOut} disabled={zoomLevel <= 1}>-</Button>
-                    <Text style={{ minWidth: '40px', textAlign: 'center' }}>
+                    <Button
+                      size="small"
+                      onClick={handleZoomOut}
+                      disabled={zoomLevel <= 1}
+                    >
+                      -
+                    </Button>
+                    <Text style={{ minWidth: "40px", textAlign: "center" }}>
                       {Math.round(getZoomScale(zoomLevel) * 100)}%
                     </Text>
-                    <Button size="small" onClick={handleZoomIn} disabled={zoomLevel >= 5}>+</Button>
+                    <Button
+                      size="small"
+                      onClick={handleZoomIn}
+                      disabled={zoomLevel >= 5}
+                    >
+                      +
+                    </Button>
                   </Space>
                 </div>
                 <div
@@ -670,7 +726,8 @@ function App() {
                       await invoke("clear_cache");
                       notification.success({
                         title: "Cache Cleared",
-                        description: "Local cache has been cleared successfully.",
+                        description:
+                          "Local cache has been cleared successfully.",
                         placement: "bottomRight",
                       });
                     } catch (e: any) {
