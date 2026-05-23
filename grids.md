@@ -1,5 +1,6 @@
 | Date | Patch | D2PT Rating | High Winrate | Most Played |
 | ---- | ----- | ----------- | ------------ | ----------- |
+| 2026-05-23 | 7.41c | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2026-05-23_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2026-05-23_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2026-05-23_p7_41c.json) |
 | 2026-05-22 | 7.41c | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2026-05-22_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2026-05-22_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2026-05-22_p7_41c.json) |
 | 2026-05-21 | 7.41c | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2026-05-21_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2026-05-21_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2026-05-21_p7_41c.json) |
 | 2026-05-20 | 7.41c | [🔗 Download](grids/dota2protracker_hero_grid_most_played_config_2026-05-20_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_high_winrate_config_2026-05-20_p7_41c.json) | [🔗 Download](grids/dota2protracker_hero_grid_d2pt_rating_config_2026-05-20_p7_41c.json) |
